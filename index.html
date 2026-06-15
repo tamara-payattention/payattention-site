@@ -247,7 +247,9 @@
   .mcell .v1{font-size:clamp(24px,2.8vw,32px);font-weight:800;color:#fff;letter-spacing:-.02em;line-height:1}
   .mcell .v2{font-size:clamp(24px,2.8vw,32px);font-weight:800;color:var(--accent-2);letter-spacing:-.02em;line-height:1}
   .mcell .cd{color:var(--body);font-size:12.5px;margin-top:9px;font-weight:500;line-height:1.45}
-  @media(max-width:780px){.mrow{grid-template-columns:1fr 1fr;gap:16px}.mac{grid-column:1/-1}.mcell .cd{font-size:11.5px}}
+  @media(max-width:780px){.mrow{grid-template-columns:1fr 1fr;gap:16px}.mac{grid-column:1/-1}.mcell .cd{font-size:11.5px}
+    /* drop the empty header cell so the two column headers map to the two value columns (left=Paywall, right=Sponsored), aligned on one line */
+    .mrow.head>div:first-child{display:none}.mrow.head{column-gap:16px}}
 
   /* FINANCIAL */
   .fin-top{display:flex;gap:0;margin-top:30px;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:var(--panel)}
