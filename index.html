@@ -210,6 +210,32 @@
   .trialpay .tag{display:inline-block;color:var(--accent-ink);font-weight:700;font-size:11px;letter-spacing:.06em;text-transform:uppercase;
     background:rgba(59,116,255,.18);border:1px solid rgba(59,116,255,.4);padding:4px 10px;border-radius:7px;margin-right:10px}
 
+  /* ── radial diagrams: uniform proportional scale on narrow screens (desktop untouched) ──
+     circle + vertex text are fixed-px and don't shrink with the container, but the SVG arrows
+     scale with the viewBox; on mobile that mismatch makes them overlap. Re-express the px
+     values as cqw (=px/desktop-width*100) so everything scales together, matching the SVG. */
+  @media(max-width:768px){
+    /* slide 6 — business-model triangle (desktop base width 480) */
+    .tri{container-type:inline-size}
+    .tri .core{width:30.83cqw;height:30.83cqw;box-shadow:0 0 12.5cqw -.83cqw rgba(59,116,255,.55),inset 0 0 7.08cqw rgba(59,116,255,.28)}
+    .tri .core .pa{font-size:3.33cqw}
+    .tri .core .pa small{font-size:2.29cqw;margin-top:.83cqw}
+    .tri .nd{width:33.33cqw}
+    .tri .nd .ic{font-size:5cqw}
+    .tri .nd .t{font-size:3.75cqw;margin-top:.63cqw}
+    .tri .nd .s{font-size:2.5cqw;margin-top:.42cqw}
+    .tri .nd.adv{top:-1.67cqw}
+    .tri .nd.usr{bottom:-1.25cqw;left:-5.42cqw}
+    .tri .nd.app{bottom:-1.25cqw;right:-5.42cqw}
+    /* slide 7 — frame ring (desktop base width 700) */
+    .ring-wrap{container-type:inline-size}
+    .ring{width:24.29cqw;height:24.29cqw;font-size:2.43cqw;box-shadow:0 0 10cqw -.86cqw rgba(59,116,255,.7),inset 0 0 5.71cqw rgba(59,116,255,.25)}
+    .ref{width:28.57cqw}
+    .ref .name{font-size:3.14cqw}
+    .ref .val{font-size:2.29cqw;margin-top:.86cqw}
+    .ref .desc{font-size:1.79cqw;margin-top:.57cqw}
+  }
+
   /* MARKET — detailed */
   .mkt{margin-top:40px;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
   .mrow{display:grid;grid-template-columns:160px 1fr 1fr;gap:26px;padding:24px 28px;border-bottom:1px solid var(--line);background:var(--panel)}
