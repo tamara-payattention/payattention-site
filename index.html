@@ -1060,22 +1060,50 @@ ready(function(){
   var resetLink=document.getElementById('resetLink'), signedEmail=document.getElementById('signedEmail'), avaInit=document.getElementById('avaInit');
   var rewardEmail=document.getElementById('rewardEmail'), giftCode=document.getElementById('giftCode');
   if(!stage1||!googleBtn) return;
+  /* feedback→$15 Netflix gift card — fill PAF_CFG to go live; until then this stays a demo */
+  var PAF_CFG = { CLIENT_ID:"PASTE_GOOGLE_CLIENT_ID.apps.googleusercontent.com",
+                  CLAIM_URL:"https://YOUR-PROJECT-REF.supabase.co/functions/v1/claim" };
+  var PAF_REAL = !/PASTE_/.test(PAF_CFG.CLIENT_ID) && !/PASTE_/.test(PAF_CFG.CLAIM_URL);
+  var pafCred = '';
   var userEmail='';
   function show(stage){ [stage1,stage2,stage3].forEach(function(s){ s.classList.remove('on'); }); stage.classList.add('on'); }
   function validate(){ submitBtn.disabled = fbText.value.trim().length < 4; }
   function onSignedIn(email){ userEmail=email; signedEmail.textContent=email; avaInit.textContent=(email[0]||'Y').toUpperCase(); show(stage2); fbText.focus(); }
-  googleBtn.addEventListener('click', function(){ onSignedIn('you@gmail.com'); });
+  if(!PAF_REAL){
+    googleBtn.addEventListener('click', function(){ onSignedIn('you@gmail.com'); }); /* demo sign-in */
+  } else {
+    var pafPeek = function(j){ try{ var p=j.split('.')[1].replace(/-/g,'+').replace(/_/g,'/'); return JSON.parse(decodeURIComponent(escape(atob(p)))); }catch(e){ return {}; } };
+    window.__pafCb = function(resp){ pafCred=(resp&&resp.credential)||''; if(!pafCred) return; onSignedIn(pafPeek(pafCred).email||''); };
+    var pafGs=document.createElement('script'); pafGs.src='https://accounts.google.com/gsi/client'; pafGs.async=true; pafGs.defer=true;
+    pafGs.onload=function(){ if(!(window.google&&google.accounts&&google.accounts.id)) return;
+      google.accounts.id.initialize({ client_id:PAF_CFG.CLIENT_ID, callback:window.__pafCb });
+      googleBtn.style.display='none';
+      var holder=document.createElement('div'); holder.style.cssText='display:flex;justify-content:center;margin-top:20px';
+      googleBtn.parentNode.insertBefore(holder, googleBtn);
+      google.accounts.id.renderButton(holder,{ type:'standard', theme:'filled_black', size:'large', text:'continue_with', shape:'pill' });
+    };
+    document.head.appendChild(pafGs);
+  }
   document.querySelectorAll('.chip-q').forEach(function(c){
     c.addEventListener('click', function(){ fbText.value=(fbText.value?fbText.value+' ':'')+c.textContent.trim()+': '; fbText.focus(); validate(); });
   });
   fbText.addEventListener('input', validate);
   function randCode(){ var c='ABCDEFGHJKLMNPQRSTUVWXYZ23456789', s=''; for(var i=0;i<4;i++){ s+=c.charAt(Math.floor(Math.random()*c.length)); } return 'NFLX-••••-••••-'+s; }
-  submitBtn.addEventListener('click', function(){
-    if(submitBtn.disabled) return;
-    /* TODO: POST { email:userEmail, feedback:fbText.value } to backend here. */
-    rewardEmail.textContent=userEmail; giftCode.textContent=randCode();
+  function pafDone(email, code, status){
+    rewardEmail.textContent = email || userEmail;
+    giftCode.textContent = (status==='claimed' && code) ? code : 'on its way';
     show(stage3); fireConfetti();
     var rh=document.getElementById('rewardHeading'); if(rh) rh.focus();
+  }
+  submitBtn.addEventListener('click', function(){
+    if(submitBtn.disabled) return;
+    if(!PAF_REAL){ pafDone(userEmail, randCode(), 'claimed'); return; } /* demo */
+    submitBtn.disabled=true; var lbl=submitBtn.textContent; submitBtn.textContent='Claiming…';
+    fetch(PAF_CFG.CLAIM_URL,{ method:'POST', headers:{'content-type':'application/json'},
+      body:JSON.stringify({ credential:pafCred, feedback:fbText.value.trim() }) })
+      .then(function(r){ return r.text().then(function(t){ var j={}; try{ j=t?JSON.parse(t):{}; }catch(e){} return {ok:r.ok,j:j}; }); })
+      .then(function(res){ if(!res.ok||!res.j.ok) throw new Error((res.j&&res.j.error)||'error'); pafDone(res.j.email,res.j.code,res.j.status); })
+      .catch(function(){ submitBtn.disabled=false; submitBtn.textContent=lbl; });
   });
   resetLink.addEventListener('click', function(){ fbText.value=''; validate(); show(stage1); });
 });
