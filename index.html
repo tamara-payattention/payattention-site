@@ -85,6 +85,11 @@
   .hero h1{font-size:clamp(34px,5vw,68px);white-space:nowrap;margin-bottom:20px}
   .hero .tagline{font-size:clamp(18px,2vw,24px);color:var(--ink);font-weight:500;white-space:nowrap}
   .hero .tagline .dim{color:var(--body)}
+  /* hero intro list (this slide only) — custom accent dot marker, no default discs */
+  .hero-list{list-style:none;margin-top:14px;display:flex;flex-direction:column;gap:11px;max-width:500px}
+  .hero-list li{display:flex;gap:11px;align-items:flex-start;font-size:clamp(15px,1.5vw,17px);line-height:1.5;color:var(--body);font-weight:500}
+  .hero-list li::before{content:"";flex:none;width:7px;height:7px;border-radius:50%;background:var(--accent-2);margin-top:.55em}
+  .hero-list li b{color:var(--ink);font-weight:700}
   @media(max-width:560px){.hero h1{font-size:30px}.hero .tagline{white-space:normal}}
 
   .device{border-radius:38px;background:linear-gradient(165deg,#23262d,#0a0b0e);border:1px solid #34373f;padding:8px;position:relative;
@@ -419,7 +424,12 @@
       <div class="kicker reveal">PayAttention</div>
       <h1 class="reveal d1">Sponsored payments</h1>
       <p class="tagline reveal d2">Pay with attention, <span class="dim">not money.</span></p>
-      <p class="body reveal d2" style="max-width:500px">When customers reach a paywall and aren't ready to pay, PayAttention gives them a second checkout option: complete a sponsored brand action and unlock the subscription for free. The merchant receives the full subscription price, the brand pays only for verified actions, and the customer gets the product without paying.</p>
+      <p class="body reveal d2" style="max-width:500px">At the paywall, users who won't pay get a second checkout — they complete a sponsored brand action instead of paying. Everyone wins:</p>
+      <ul class="hero-list reveal d2">
+        <li><b>Customer</b> — unlocks the full subscription for free</li>
+        <li><b>Merchant</b> — still gets paid the full subscription price</li>
+        <li><b>Brand</b> — pays only for verified actions (CPA)</li>
+      </ul>
     </div>
     <div class="device-col reveal d2">
       <div class="device"><div class="screen"><img data-img="heroA" alt="PayAttention app: subscription covered, paid $0"></div></div>
