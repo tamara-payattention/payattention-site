@@ -502,7 +502,7 @@
             <div class="screen">
               <div class="slides" id="slides"></div>
               <span class="dripple" id="dripple" aria-hidden="true"></span>
-              <svg class="dcursor" id="dcursor" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8" fill="rgba(11,13,16,.12)" stroke="#0b0d10" stroke-width="1.6"/><circle cx="12" cy="12" r="3" fill="#0b0d10"/></svg>
+              <svg class="dcursor" id="dcursor" viewBox="0 0 24 24" fill="#fff" stroke="#0b0d10" stroke-width="1.3" aria-hidden="true"><path d="M4 2l16 9-6.5 1.8L11 20z"/></svg>
             </div>
           </div>
           <button class="dnav next" id="nextBtn" type="button" aria-label="Next screen">›</button>
@@ -936,7 +936,7 @@ ready(function(){
     ['s13','Submitted — in review'],['s14','Approved — +$19.90'],['s15','Subscription fully covered'],['s16','Reward earned — bill covered ✓']
   ];
   /* tap target [x%,y%] per screen so the cursor lands on the real button */
-  var TAPS=[[50,90],[50,85],[86,14],[50,80],[50,75],[45,34],[50,86],[50,86],[50,88],[50,84],[50,85],[50,85],[50,88]];
+  var TAPS=[[50,90],[50,85],[50,88],[50,80],[50,75],[45,34],[50,86],[50,86],[50,88],[50,84],[50,85],[50,85],[50,88]];
   var IMG=window.IMG||{};
   var slides=document.getElementById('slides'), caption=document.getElementById('caption'),
       pbar=document.getElementById('pbar'), device=document.getElementById('demoDevice'),
