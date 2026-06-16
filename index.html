@@ -90,7 +90,12 @@
   .hero-list li{display:flex;gap:11px;align-items:flex-start;font-size:clamp(15px,1.5vw,17px);line-height:1.5;color:var(--body);font-weight:500}
   .hero-list li::before{content:"";flex:none;width:7px;height:7px;border-radius:50%;background:var(--accent-2);margin-top:.55em}
   .hero-list li b{color:var(--ink);font-weight:700}
-  @media(max-width:560px){.hero h1{font-size:30px}.hero .tagline{white-space:normal}}
+  @media(max-width:560px){.hero h1{font-size:30px}.hero .tagline{white-space:normal}
+    /* shrink the hero iPhone mockup to ~half the viewport on phones (this slide only) */
+    #s-hero{min-height:100dvh;padding-bottom:max(76px,env(safe-area-inset-bottom));padding-top:max(92px,env(safe-area-inset-top))}
+    #s-hero .device{width:min(240px,62vw,calc(45dvh * 560 / 1214));margin-inline:auto}
+    #s-hero .device-col{padding-bottom:env(safe-area-inset-bottom)}
+  }
 
   .device{border-radius:38px;background:linear-gradient(165deg,#23262d,#0a0b0e);border:1px solid #34373f;padding:8px;position:relative;
     box-shadow:0 40px 90px -30px rgba(0,0,0,.9),0 0 70px -18px rgba(59,116,255,.45)}
