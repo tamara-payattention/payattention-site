@@ -182,6 +182,11 @@
   .blist li{list-style:none;display:flex;gap:13px;font-size:clamp(16px,1.7vw,19px);color:var(--ink);font-weight:500;line-height:1.35}
   .blist li::before{content:"";flex:none;width:7px;height:7px;border-radius:50%;background:var(--accent-2);margin-top:10px;box-shadow:0 0 10px rgba(59,116,255,.8)}
   .blist li b{color:#fff;font-weight:700}
+  .why-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:42px;max-width:1040px}
+  .why-card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:28px 30px}
+  .why-lead{font-size:clamp(18px,2vw,23px);font-weight:800;letter-spacing:-.01em;color:var(--ink);line-height:1.18}
+  .why-sub{margin-top:11px;font-size:clamp(14px,1.45vw,16px);color:var(--body);font-weight:500;line-height:1.45}
+  @media(max-width:780px){.why-grid{grid-template-columns:1fr;gap:13px;margin-top:26px}.why-card{padding:20px 22px}}
   .winban{margin-top:30px;font-size:clamp(20px,2.4vw,26px);font-weight:800;color:#fff}
   .winban .x{color:var(--muted);font-weight:500;font-size:15px}
   .tri{position:relative;width:100%;max-width:480px;aspect-ratio:1/.86;margin:0 auto}
@@ -615,10 +620,12 @@
 <section class="slide" id="s-whynow" data-name="Why now?">
   <div class="wrap">
     <h2 class="reveal d1">Why now?</h2>
-    <ul class="blist">
-      <li class="reveal d1"><div>CAC becomes higher. It's enough now to cover users' bills</div></li>
-      <li class="reveal d2"><div>AI allows to personalise and attribute sponsored offers better than best-in-class recommendation tools in the past</div></li>
-    </ul>
+    <div class="why-grid">
+      <div class="why-card reveal d1"><div class="why-lead">CAC becomes extremely high.</div><div class="why-sub">Paying a user's bill is now cheaper than buying their attention.</div></div>
+      <div class="why-card reveal d1"><div class="why-lead">Brands want positive unit economics.</div><div class="why-sub">Not impressions.</div></div>
+      <div class="why-card reveal d2"><div class="why-lead">People ignore ads.</div><div class="why-sub">And want to save money.</div></div>
+      <div class="why-card reveal d2"><div class="why-lead">AI makes it personal.</div><div class="why-sub">Best-in-class recommendations affordable.</div></div>
+    </div>
   </div>
 </section>
 
